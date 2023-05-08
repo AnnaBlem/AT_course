@@ -2,7 +2,7 @@
 
 
 def even_sum(lst):
-    list_without_odd = lst[::2]
+    list_without_odd = lst[::2]  # создание списка из среза с четными индексами 
     sum_list = sum(list_without_odd)
     return sum_list
 
