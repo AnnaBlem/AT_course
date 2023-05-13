@@ -3,11 +3,24 @@
 # смотрит, сколько раз каждый символ уже встречался, и добавляет количество к символам с помощью постфикса формата _n.
 # Возвращается новая строка
 # Например (Ввод --> Вывод):
-# 'letter' --> l_1e_1t_1t_2e_2_r_1
+# 'letter' --> l_1e_1t_1t_2e_2r_1
 
 
 def repeats(our_str):
-    # Здесь нужно написать код
+    """
+    добавляет к символам в строке кол-во вхождений через нижнее подчеркивание
+    :param our_str:
+    :return new_str:
+    """
+    counters = {}
+    c_counts = []
+    for c in our_str:
+        if c in counters:
+            counters[c] += 1
+        else:
+            counters[c] = 1
+        c_counts.append(f'{c}_{counters[c]}')
+    new_str = ''.join(c_counts)
     return new_str
 
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
