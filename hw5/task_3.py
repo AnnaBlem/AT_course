@@ -19,7 +19,30 @@
 
 
 def everything_for_your_cat(cats_data):
-    # Здесь нужно написать код
+    """
+    преобразовывает кортежи с одинаковыми значениями (владельцы котиков) к формату с ключом (по владельцу котиков)
+    :param cats_data:
+    :return our_str:
+    >>>everything_for_your_cat([('Мартин', 5, 'Алексей', 'Егоров'),
+    ('Фродо', 3, 'Анна', 'Самохина'),
+    ('Вася', 4, 'Алексей', 'Егоров')])
+    'Алексей Егоров: Мартин, 5; Вася, 4
+    Анна Самохина: Фродо, 3'
+    >>>everything_for_your_cat[()]
+    ''
+    """
+    owner_pets = {}
+    our_str = ''
+    for t in cats_data:
+        name = t[2] + ' ' + t[3]
+        pet_age = t[0] + ', ' + str(t[1])
+        if name in owner_pets:
+            owner_pets[name] += '; ' + pet_age
+        else:
+            owner_pets[name] = pet_age
+    owner_pets_list = [f'{k}: {v}' for k, v in owner_pets.items()]
+    for a in owner_pets_list:
+        our_str += a + '\n'
     return our_str
 
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
