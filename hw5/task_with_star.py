@@ -10,10 +10,27 @@
 # 2008 --> MMVIII
 
 
-def to_roman(val):
-    # Здесь нужно написать код
-    return roman_str
+arab_rome = {1: 'I', 4: 'IV', 5: 'V', 9: 'IX',
+             10: 'X', 40: 'XL', 50: 'L', 90: 'XC',
+             100: 'C', 400: 'CD', 500: 'D', 900: 'CM',
+             1000: 'M'
+             }
 
+
+def to_roman(val):
+    """
+    преобразовывает арабское число в римское
+    :param val:
+    :return roman_str:
+    """
+    roman_str = ''
+    for arabic_number, rome_number in reversed(arab_rome.items()):
+        # прохождение по элементам словаря с конца, чтобы считать наиближайшее к арабскому числу ключ
+        # например, к 1133 ближайший ключ - 1000
+        while val >= arabic_number:
+            roman_str += rome_number
+            val -= arabic_number
+    return roman_str
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
 
 
