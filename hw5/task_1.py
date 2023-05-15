@@ -7,6 +7,11 @@
 
 
 def letter_stat(our_str):
+    """
+    считает кол-во повторений букв в слове
+    :param our_str:
+    :return letters_dict:
+    """
     letters_dict = {}
     for c in our_str:
         if c in letters_dict:
