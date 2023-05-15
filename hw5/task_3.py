@@ -20,29 +20,22 @@
 
 def everything_for_your_cat(cats_data):
     """
-    преобразовывает кортежи с одинаковыми значениями (владельцы котиков) к формату с ключом (по владельцу котиков)
+    группирует котиков по их владельцам и форматирует
     :param cats_data:
     :return our_str:
-    >>>everything_for_your_cat([('Мартин', 5, 'Алексей', 'Егоров'),
-    ('Фродо', 3, 'Анна', 'Самохина'),
-    ('Вася', 4, 'Алексей', 'Егоров')])
-    'Алексей Егоров: Мартин, 5; Вася, 4
-    Анна Самохина: Фродо, 3'
-    >>>everything_for_your_cat[()]
-    ''
     """
     owner_pets = {}
-    our_str = ''
-    for t in cats_data:
-        name = t[2] + ' ' + t[3]
-        pet_age = t[0] + ', ' + str(t[1])
-        if name in owner_pets:
-            owner_pets[name] += '; ' + pet_age
-        else:
-            owner_pets[name] = pet_age
-    owner_pets_list = [f'{k}: {v}' for k, v in owner_pets.items()]
-    for a in owner_pets_list:
-        our_str += a + '\n'
+    for pet_name, pet_age, name, surname in cats_data:
+        name_surname = f'{name} {surname}'
+        pet_age = f'{pet_name}, {pet_age}'
+        if name_surname not in owner_pets:
+            owner_pets[name_surname] = []
+        owner_pets[name_surname].append(pet_age)
+    owner_pets_list = [
+        f'{owner}: {"; ".join(pets)}\n'
+        for owner, pets in owner_pets.items()
+    ]
+    our_str = ''.join(owner_pets_list)
     return our_str
 
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
