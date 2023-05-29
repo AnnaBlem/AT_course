@@ -13,29 +13,27 @@ rome_arab = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}
 
 
 class RomanNums:
+    def __init__(self, roman: str):
+        self.roman = roman
 
-        def __init__(self, roman: str):
-                self.roman = roman
-                self.arab = 0
+    def from_roman(self):
+        arab = 0
+        rome_digit_previous = 'I'  # задание предыдущего значения, которое априори меньше любого другого
+        for rome_digit in reversed(self.roman):  # прохождение строки из римских цифр от меньшего разряда к большему
+            if rome_arab[rome_digit] >= rome_arab[rome_digit_previous]:
+                arab += rome_arab[rome_digit]  # увеличение арабского числа на следующую цифру (IV -> 5 + 1)
+            else:
+                arab -= rome_arab[rome_digit]  # уменьшение арабского числа на следующую цифру (IV -> 5 - 1)
+            rome_digit_previous = rome_digit
+        return arab
 
-        def from_roman(self):
-            rome_digit_previous = 'I'
-            for rome_digit in reversed(self.roman):
-                if rome_arab[rome_digit] >= rome_arab[rome_digit_previous]:
-                    self.arab += rome_arab[rome_digit]
-                else:
-                    self.arab -= rome_arab[rome_digit]
-                rome_digit_previous = rome_digit
-            return self.arab
-
-        def is_palindrome(self):
-            arab = str(self.from_roman())
-            result = True
-            for number_digit in range((len(arab) + 1) // 2):
-                if arab[number_digit] != arab[len(arab) - number_digit - 1]:
-                    result = False
-                    break
-            return result
+    def is_palindrome(self):
+        arab = str(self.from_roman())
+        for digit_index in range((len(arab) + 1) // 2):  # прохождение по цифрам арабского числа до середины
+            if arab[digit_index] != arab[len(arab) - digit_index - 1]:
+            # сравнение зеркальных цифр до первого несовпадения
+                return False
+        return True
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
 
 
