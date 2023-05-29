@@ -21,10 +21,16 @@
 # т.к. буква "т" встречается 4 раза, "а" 3 раза, 'о' 2 раза, остальные по одной. Сумма трёх самых частых букв 4+3+2 = 9.
 # 1337*32*9 = 385056
 
+# https://docs-python.ru/standart-library/modul-collections-python/klass-counter-modulja-collections/
 from collections import Counter
 
 
 def sum_most_3_common(s: str):
+    """
+    считает сумму вхождений 3-х самых частых символов
+    :param s:
+    :return sum(frequencies):
+    """
     most_3_common = Counter(s).most_common(3)
     frequencies = [freq for _, freq in most_3_common]
     return sum(frequencies)
