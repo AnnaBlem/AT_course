@@ -27,7 +27,8 @@ class Trigon:
             if arg <= 0:
                 raise ValueError('Стороны должны быть положительными')
         a, b, c = args[0], args[1], args[2]
-        is_triangle = (a < b + c) and (b < a + c) and (c < a + b)
+        is_triangle = (a < b + c) and (b < a + c) and (c < a + b)  # выносим в переменную неравенство треугольника,
+        # чтобы условие в if легко читалось
         if not is_triangle:
             raise Exception('Не треугольник')
 # Ниже НИЧЕГО НЕ НАДО ИЗМЕНЯТЬ
