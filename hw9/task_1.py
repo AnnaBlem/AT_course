@@ -6,7 +6,7 @@
 # Здесь пишем код
 with open('test_file/task1_data.txt', encoding='utf-8') as file1, \
      open('test_file/task1_answer.txt', mode='w', encoding='utf-8') as file2:
-    for one_line in file1.readlines():
+    for one_line in file1:
         for symbol in one_line:
             if not symbol.isdigit():
                 file2.write(symbol)
