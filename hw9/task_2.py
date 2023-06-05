@@ -68,3 +68,18 @@ def new_help(request):
 help = new_help
 
 
+import time
+@func_log()
+def func1():
+    time.sleep(1)
+
+@func_log(file_log='func2.txt')
+def func2():
+    time.sleep(2)
+
+func1()
+func2()
+func1()
+
+
+
