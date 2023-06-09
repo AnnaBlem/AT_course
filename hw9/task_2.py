@@ -47,32 +47,47 @@ def func_log(file_log='log.txt'):
         def wrapper(*args, **kwargs):
             write_log(file_log, func.__name__)
             return func(*args, **kwargs)
-        attrs = ['__name__', '__doc__', '__qualname__', '__defaults__', '__kwdefaults__', '__annotations__',
-                 '__module__']
-        for attr in attrs:
-            if hasattr(func, attr):
-                setattr(wrapper, attr, getattr(func, attr))
-        wrapper.__dict__.update(func.__dict__)
+
+        def custom_help():
+            help(func)
+        wrapper.custom_help = custom_help
         return wrapper
     return decorator
 
 
+old_help = help
 
+
+def new_help(request):
+    if hasattr(request, 'custom_help'):
+        request.custom_help()
+    else:
+        old_help(request)
+
+
+help = new_help
 
 
 import time
-# @func_log()
-# def func1():
-#     time.sleep(1)
-#
-# @func_log(file_log='func2.txt')
-# def func2():
-#     time.sleep(2)
-#
-# func1()
-# func2()
-# func1()
 
 
+@func_log()
+def func1():
+    time.sleep(3)
 
 
+@func_log(file_log='func2.txt')
+def func2():
+    time.sleep(5)
+
+
+func1()
+func2()
+func1()
+
+
+@func_log()
+def func1():
+    pass
+
+help(func1)
