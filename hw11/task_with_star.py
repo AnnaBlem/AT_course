@@ -25,15 +25,17 @@ try:
     download_button = driver.find_element(By.LINK_TEXT, 'Скачать СБИС')
 
     print('Перейти по "Скачать СБИС"')
-    driver.execute_script("arguments[0].click();", download_button)
+    driver.execute_script("return arguments[0].scrollIntoView(true);", download_button)
+    download_button.click()
     sleep(5)
 
     print('Скачать СБИС Плагин для вашей ОС в папку с данным тестом')
     plugin_button = driver.find_element(By.CSS_SELECTOR, '[data-id="plugin"]')
     plugin_button.click()
     sleep(5)
-    web_setup_url = [a for a in driver.find_elements(By.CSS_SELECTOR, "a.sbis_ru-DownloadNew-loadLink__link")
-                     if a.is_displayed()][0].get_attribute("href")
+    web_setup_url = driver.find_elements(By.XPATH,
+                                         '//p[contains(text(), "СБИС Плагин работает на операционных системах")]/'
+                                         '..//a[contains(text(), "Скачать")]')[0].get_attribute("href")
     download_path = os.path.join(os.path.dirname(__file__), "sbisplugin-setup-web.exe")
     urllib.request.urlretrieve(web_setup_url, download_path)
 
