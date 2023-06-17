@@ -40,14 +40,17 @@ try:
     sleep(5)
 
     print('Отправить сообщение самому себе')
-    plus = driver.find_element(By.CSS_SELECTOR, '.icon-RoundPlus')
+    plus = driver.find_element(By.CSS_SELECTOR, '[data-qa="sabyPage-addButton"]')
     plus.click()
     sleep(5)
     date_today = datetime.today()
-    search_user = driver.find_element(By.CSS_SELECTOR, f'[name="ws-input_{date_today.strftime("%Y-%m-%d")}"]')
+    search_user = driver.find_element(
+        By.CSS_SELECTOR, '[templatename="Addressee/popup:Stack"] .controls-InputBase__field>input'
+    )
     search_user.send_keys(name_user, Keys.ENTER)
     sleep(5)
     choose_user = driver.find_element(By.CSS_SELECTOR, f'[title="{name_user}"]')
+    driver.execute_script("return arguments[0].scrollIntoView(true);", choose_user)
     choose_user.click()
     sleep(5)
     text_message = driver.find_element(By.CSS_SELECTOR, '[data-qa="textEditor_slate_Field"]')
@@ -63,10 +66,10 @@ try:
     my_message = my_messages[0]
 
     print('Удалить это сообщение и убедиться, что удалили')
-    ActionChains(driver)\
-        .move_to_element(my_message)\
-        .context_click(my_message)\
-        .perform()
+    actions_chains = ActionChains(driver)
+    actions_chains.move_to_element(my_message)
+    actions_chains.context_click(my_message)
+    actions_chains.perform()
     sleep(5)
     delete = driver.find_element(By.CSS_SELECTOR, '[title="Перенести в удаленные"]')
     delete.click()
