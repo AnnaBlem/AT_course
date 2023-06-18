@@ -42,30 +42,27 @@ def write_log(file_log, func_name):
         file.write(f'{func_name} вызвана {dt_formatted}\n')
 
 
+def update_wrapper(wrapper, wrapped):
+    """Упрощенная версия кода functools.update_wrapper
+        https://github.com/python/cpython/blob/9544948e7e2f288513137a62308e875dac086a18/Lib/functools.py#L35
+    """
+    for attr in ('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'):
+        if hasattr(wrapped, attr):
+            setattr(wrapper, attr, getattr(wrapped, attr))
+    wrapper.__dict__.update(wrapped.__dict__)
+    wrapper.__wrapped__ = wrapped
+    return wrapper
+
+
 def func_log(file_log='log.txt'):
     def decorator(func):
         def wrapper(*args, **kwargs):
             write_log(file_log, func.__name__)
             return func(*args, **kwargs)
-
-        def custom_help():
-            help(func)
-        wrapper.custom_help = custom_help
-        return wrapper
+        return update_wrapper(wrapper, func)
     return decorator
 
 
-old_help = help
-
-
-def new_help(request):
-    if hasattr(request, 'custom_help'):
-        request.custom_help()
-    else:
-        old_help(request)
-
-
-help = new_help
 
 
 import time
@@ -84,10 +81,5 @@ def func2():
 func1()
 func2()
 func1()
-
-
-@func_log()
-def func1():
-    pass
 
 help(func1)
